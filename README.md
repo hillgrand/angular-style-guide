@@ -117,6 +117,6 @@ App projects must follow the [Angular Style Guide](https://angular.io/guide/styl
 
     * Always make sure that the streams complete and that there are not memory leaks! 
 
-    * Do not use async/await!
+    * Do not use Promises nor async/await!
 
   
