@@ -1,6 +1,6 @@
-# Angular Style Guide @ HILLGRAND
+# Angular Style Guide @ [HILLGRAND](https://hillgrand.com/)
 
-App projects must follow the [Angular Style Guide](https://angular.io/guide/styleguide) and the provided information on this page:
+App projects must follow the [Angular Style Guide](https://angular.io/guide/styleguide) , make good use of [TypeScript](http://typescriptlang.org/) types and the provided information on this page:
 
 1. Project Architecture:
 
@@ -50,7 +50,9 @@ App projects must follow the [Angular Style Guide](https://angular.io/guide/styl
 
           * **Guards** (zero or many / has directory / no barrel necessary) - contains all the canActivate/canDeactivate/canLoad/canLoadChild guards for the ((sub)feature) module.
 
-    5. Providers - Never use the @Injectable providedIn property because of unit testing issues.
+          * **Router Module** (zero or many / no directory ) - every user interface (including dialogs) should have a unique route (some exceptions may apply) and all not mandatory modules should be lazy loaded.
+
+    5. Providers - In most cases use the providers array of the nearest module, in some cases you might want to use the providers on the component/directive decorator. Never use the @Injectable providedIn property because of unit testing issues.
 
 
 2. Application Elements:
@@ -67,7 +69,11 @@ App projects must follow the [Angular Style Guide](https://angular.io/guide/styl
 
         * use derived/modified store streams instead of pipes when possible.
 
-        * simplify and optimize templates using directives, pipes and rxjs operators.
+        * have simplified and optimized templates (use directives, pipes and rxjs operators).
+
+        * (Components should) not have methods that are called inside the template (use Pipes) nor heavy calculations inside the templates. Every event should be handled inside the component class inside a method.
+
+        * (Components should) not have unnecessary subscriptions and state. Make good use of the `async` pipe and limit the amount of subscriptions.
     
     2. **Services** should: 
 
@@ -101,7 +107,11 @@ App projects must follow the [Angular Style Guide](https://angular.io/guide/styl
 
         * can contain minor state **THAT IS REACTIVE** to the data flowing from the store (either NGRX or the [query params store](https://github.com/IliaIdakiev/query-param-store)).
 
-4. User Input
+4. Inner Communication
+
+    * All communication should be done via NGRX. Usually NGRX is used only for state management but in our case we use it as a messaging system. Some actions might not get caught by a reducer in order to modify the state but something might be listening for this action in order to preform something else.
+
+5. User Input:
 
     * For simpler forms use the template driven approach
 
@@ -109,14 +119,42 @@ App projects must follow the [Angular Style Guide](https://angular.io/guide/styl
 
     * When creating validators always make sure that they can be used in both form types which for the template driven case results in a directive and for the reactive approach results in a function. Create the function and reuse it inside the directive.
 
-    * Don't forget to track the form changes uing [form-control-change-tracker](https://github.com/IliaIdakiev/form-control-change-tracker) module.
+    * Don't forget to track the form changes using [form-control-change-tracker](https://github.com/IliaIdakiev/form-control-change-tracker) module.
 
     * Make sure that you present the `unsaved changes` dialog if there are any unsaved changes.
 
-5. Reminders
+6. Reminders:
 
     * Always make sure that the streams complete and that there are not memory leaks! 
 
-    * Do not use Promises nor async/await!
+    * Do not use the **any** type. Always define the type of the variable or create an interface!
 
-  
+    * Do not use Promises nor async/await! Only RxJS.
+
+    * Put $ after every rxjs stream name (e.g. source$)
+
+    * Use Subjects as private properties only! If you need to export them in order to observe the values use asObservable and create a public stream.
+
+    * Don't use setTimeout, setInterval, and so on... use RxJS.
+
+---
+
+# About JavaScript / TypeScript
+
+1. Variables
+
+    * Names should always be camelCase.
+
+    * Names should start with a letter.
+
+    * Names can start with _ only if they should not be touched from outside.
+
+    * Always use `const` whenever the variable won't change otherwise use `let`.
+
+2. Code Indentation
+   
+    * **2 Spaces**
+
+3. Semicolons
+
+    * **Always!**
