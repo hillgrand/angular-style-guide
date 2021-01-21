@@ -44,7 +44,7 @@ App projects must follow the [Angular Style Guide](https://angular.io/guide/styl
 
           * **Models (Non NGRX)** (one / has directory / no barrel necessary) - Must contain services for each individual store. The models are used for component/directive/pipe <-> store communication. All communication should be done through the models.
 
-    3. Resolving Data - [HG Resolvers](https://github.com/IliaIdakiev/hg-resolvers) (**DO NOT USE ANGULAR RESOLVERS FOR LOADING ASYNC DATA**): Every ((sub)feature) module must have one `-resolvers` directory that contains all the resolver directives used for resolving data that will be presented inside the views. Resolvers **CAN BE SHARED** and if so they should be put inside the nearest shared module inside a `-resolvers` directory.
+    3. Resolving Data - [HG Resolvers](https://github.com/IliaIdakiev/hg-resolvers) (**DO NOT USE ANGULAR RESOLVERS FOR LOADING ASYNC DATA**): Every ((sub)feature) module must have one `-resolvers` directory that contains all the resolver directives used for resolving data that will be presented inside the views. Resolvers **CAN BE SHARED** and if so they should be put inside the nearest shared module inside a `-resolvers` directory. Each `autoResolve` resolver should have as inputs all dependencies in order for it to be able to automatically resolve whenever something changes. This will result to all actions containing the data that needs to be sent to the backend (in most cases you should't select data from the store inside the effects). 
 
     4. Routing - All routing and navigation should done through NGRX and the router service should only be used to get state that is not present in the `routerModel`.
 
@@ -91,6 +91,10 @@ App projects must follow the [Angular Style Guide](https://angular.io/guide/styl
     4. **Selectors** should:
 
         * be used to make state derivations but it's preferred to modify the data before saving it inside NGRX store (this can be inside the reducer or inside the NGRX effects)
+        
+    5. **Effects** should:
+    
+        * not in most cases select data from the store. The data should be provided in the action payload.
 
 3. Application State - Think of the application as a state machine. The input is the url it the output are the UI elements. Given the same input the UI elements should always be in the same state as they were before (the only exception is the data that is loaded from the database and is presented in the UI - these are the effects, everything else should be pure).
 
