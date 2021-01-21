@@ -50,7 +50,8 @@ App projects must follow the [Angular Style Guide](https://angular.io/guide/styl
 
           * **Guards** (zero or many / has directory / no barrel necessary) - contains all the canActivate/canDeactivate/canLoad/canLoadChild guards for the ((sub)feature) module.
 
-          * **Router Module** (zero or many / no directory ) - every user interface (including dialogs) should have a unique route (some exceptions may apply) and all not mandatory modules should be lazy loaded.
+          * **Router Module** (zero or many / no directory ) - every user interface (including dialogs) should have a unique route (some exceptions may apply) and all not mandatory modules should be lazy loaded (make sure that you haven't imported the ((sub)feature) module somewhere else otherwise the lazy loading won't work). The routing module (file) should be located inside the ((sub)feature) itself.
+
 
     5. Providers - In most cases use the providers array of the nearest module, in some cases you might want to use the providers on the component/directive decorator. Never use the @Injectable providedIn property because of unit testing issues.
 
