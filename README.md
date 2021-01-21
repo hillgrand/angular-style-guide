@@ -12,9 +12,9 @@ App projects must follow the [Angular Style Guide](https://angular.io/guide/styl
         
             One application can have **ONLY ONE CORE MODULE**.
 
-        * **Shared Module** (one or many / has directory) - contains shared functionality that is re-used across different the (sub) module. 
+        * **Shared Module** (one or many / has directory) - contains shared functionality that is re-used across different ((sub)feature) modules. 
 
-            One application can must have at least **ONE CORE MODULE**. In some cases feature modules can have a shared module containing feature specific shared functionality that is used only inside the feature module and sub modules (think of it as lexical scope in JS).
+            One application must have at least **ONE CORE MODULE**. In some cases feature modules can have a shared module containing feature specific shared functionality that is used only inside the feature module and sub modules (think of it as lexical scope in JS).
 
             Specifics:
 
@@ -26,7 +26,7 @@ App projects must follow the [Angular Style Guide](https://angular.io/guide/styl
         
         * **Feature Module** (zero or many / has directory) - a module containing all the necessary components/directives/pipes/services for a feature.
 
-            The modules should represent the different features that the application can have. For example if an application has user management feature we should have a user module that contains all the components/directives/pipes/services.
+            The modules should represent the different features that the application can have. For example if an application deals with user management it should have a user module that contains all the components/directives/pipes/services that are used for this feature.
 
             If a specific service has to be used in a different feature module(s) it has to be hoisted to the core module or if we have shared modules with providers to nearest shared module.
 
